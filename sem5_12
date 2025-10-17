@@ -1,0 +1,62 @@
+#include <iostream>  //Задача 12
+#include <vector>
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	int len = 0, k = 0, c = 0;
+	vector <int> v(50);
+	for_each(v.begin(), v.end(), [](int& x) {x = 0 + rand() % 100; });
+	for_each(v.begin(), v.end(), [](int x) {cout << x << " "; });
+
+	cout << endl;
+	
+
+	auto minit = min_element(v.begin(), v.end());
+	auto maxit = max_element(v.begin(), v.end());
+	double suma = accumulate(v.begin(), v.end(), 0);
+	vector <int>::iterator  itBegin = v.begin();
+	vector<int>::iterator itEnd = v.end();
+	--itEnd;
+	
+	
+	for (int x : v) {
+		len++;
+		if (x < 95*(*maxit)/100) {
+			k++;
+		}
+	}
+	int cr = *itBegin - (*itEnd);
+
+	sort(v.begin(), v.end(), greater<int>());
+
+	cout << "Минимальный уровень топлива: " << *minit << ", среднее потребление: "<<cr<<endl;
+	if (k!=0) {
+		cout << "Уровень не падал" << endl;
+	}
+	else {
+		cout << "Уровень падал" << endl;
+	}
+	for_each(v.begin(), v.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	
+	if (len % 2 != 0) {
+		for (int i = 0; i < len; i++) {
+			if (i == (len / 2)) {
+				cout<< "Медиана равна: " << v[i];
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < len; i++) {
+			if (i == (len/2)-1) {
+				float med = (v[i] + v[i + 1]);
+				cout <<"Медиана равна: " << med / 2;
+			}
+		}
+	}
+
+
+	return 0;
+}
