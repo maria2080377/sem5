@@ -1,0 +1,19 @@
+#include <iostream>    //Задача 3
+#include <vector> 
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	vector <int> vec(20);
+
+	for_each(vec.begin(), vec.end(), [](int& x) {cin >> x; });
+
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+
+	auto it = max_element(vec.begin(), vec.end(), [](int a, int b) {return a < b; });
+	cout << *it;
+
+	return 0;
+}
