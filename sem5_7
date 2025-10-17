@@ -1,0 +1,41 @@
+#include <iostream>    //Задача 7
+#include <vector> 
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	int n = 1 + rand() % 100;
+	vector <int> vec(n);
+	int k = 0, len = 0;
+
+	for_each(vec.begin(), vec.end(), [](int& x) {x = rand() % 200 + (-100); });
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	vec.erase(remove_if(vec.begin(), vec.end(), [](int x) {return x >= 50 ||x<=-50; }), vec.end());
+	auto maxit = max_element(vec.begin(), vec.end());
+	auto minit = min_element(vec.begin(), vec.end());
+	double suma = accumulate(vec.begin(), vec.end(), 0);
+	for (int x : vec) {
+		if (x > -10) {
+			k++;
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		len++;
+	}
+	cout << "Максималиный элемент: " << *maxit << ", " << "минимальный элемент: " << *minit <<", среднее значение: "<<suma/len << endl;
+
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	if (len == k) {
+		cout << "Все температуры больше -10";
+	}
+	else {
+		cout<<"Не все температуры больше -10";
+	}
+	
+
+
+	return 0;
+}
