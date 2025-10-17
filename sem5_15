@@ -1,0 +1,76 @@
+#include <iostream>  //Задача 15
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cmath>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	int len = 0, k = 0, c = 0;
+	vector<vector<double>> temp(5, vector<double>(30));
+	vector<vector<double>> pressure(5, vector<double>(100));
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 30; j++) {
+			temp[i][j] = rand() % 1 + (-100);
+		}
+	}
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 30; j++) {
+			pressure[i][j] = rand() % 1 + (-100);
+		}
+	}
+	for (int i = 0; i < 5; i++) {
+		double suma = accumulate(temp[i].begin(), temp[i].end(), 0);
+		double cr = suma / temp[i].size();
+		cout << "Средняя температура " << i + 1 << " канала: " << cr << endl;
+	}
+	for (int i = 0; i < 5; i++) {
+		auto maxit =max_element(pressure[i].begin(), pressure[i].end());
+		auto minit = min_element(pressure[i].begin(), pressure[i].end());
+		cout << "Максимальное давление " << i + 1 << " канала: " << *maxit << endl;
+		cout << "Минимальное давление " << i + 1 << " канала: " << *minit << endl;
+
+
+	}
+	int mxt = 0;
+	double tmax = -10000;
+	for (int i = 0; i < 5; i++) {
+		auto minit = min_element(temp[i].begin(), temp[i].end());
+		auto maxit = max_element(temp[i].begin(), temp[i].end());
+		if ((*maxit - *minit) > tmax) {
+			tmax = *maxit - *minit;
+			mxt = i;
+		}
+	}
+	cout << "Канал с наибольшей вариацией температуры : " << mxt+1 << endl;
+	vector<vector<double>> pressure2(5, vector<double>(100));
+	for (int i = 0; i < 5; i++) {
+		double minit = *min_element(pressure[i].begin(), pressure[i].end());
+		double maxit = *max_element(pressure[i].begin(), pressure[i].end());
+		transform(pressure[i].begin(), pressure[i].end(), pressure2[i].begin(), [&minit, &maxit](double x) { return (x - minit) / (maxit - minit); });
+	}
+	cout << "Давление после нормализации, превышающие 0,9: " << endl;
+	for (int i = 0; i < 5; i++) {
+		cout << i + 1 << " канал давления " << endl;
+		for_each(pressure2[i].begin(), pressure2[i].end(), [](double x) { if (x > 0.9) {cout << x << " "; }});
+		cout << endl;
+	}
+	
+	int ct = 0;
+	double maxi = -10000;
+	for (int i = 0; i < 5; i++) {
+		sort(temp[i].begin(), temp[i].end(), [](int a, int b) { return a < b; });
+	}
+	for (int i = 0; i < 5; i++) {
+		double suma = accumulate(temp[i].begin(), temp[i].end(), 0);
+		c = suma / temp[i].size();
+		if (c > maxi) {
+			maxi = c; 
+			ct = i;
+		}
+	}
+	cout << "Канал с максимальной средней температурой: " << ct + 1 << endl;
+	for_each(temp[ct].begin(), temp[ct].end(), [](double x) {  cout << x << " "; }); 
+
+	return 0;
+}
