@@ -1,0 +1,32 @@
+#include <iostream>     //задача 6
+#include <vector> 
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+
+	vector <int> vec(7);
+
+	for_each(vec.begin(), vec.end(), [](int& x) {cin >> x; });
+
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	auto it = find(vec.begin(), vec.end(), 7);
+	if (it!=vec.end()) {
+		cout << "Есть число 7" << endl;
+	}
+	else {
+		cout << "Нет числа 7" << endl;
+	}
+	sort(vec.begin(), vec.end());
+	vec.erase(unique(vec.begin(), vec.end()),vec.end());
+	
+	
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+
+	
+
+	return 0;
+}
