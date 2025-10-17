@@ -1,0 +1,39 @@
+#include <iostream>  //Задача 11
+#include <vector>
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	int len = 0, k = 0, c = 0;
+	vector <float> v(50);
+	for_each(v.begin(), v.end(), [](float& x) {x = -5.001 + rand() % 10; });
+	for_each(v.begin(), v.end(), [](float x) {cout << x << " "; });
+	
+	cout << endl;
+	v.erase(remove_if(v.begin(), v.end(), [](float x) {return x <-0.1; }), v.end());
+	
+	auto maxit = max_element(v.begin(), v.end());
+	double suma = accumulate(v.begin(), v.end(), 0);
+	for (int x : v) {
+		len++;
+		if (x > 0.5) {
+			k++;
+		}
+	}
+	sort(v.begin(), v.end(), greater<int>());
+	cout << "Среднее значение амплитуды: " << suma / 180 << ", максимальное значение: "<<*maxit<<endl;
+	if (len == k) {
+		cout << "Все значения больще 0,5" << endl;
+	}
+	else {
+		cout << "Не все значения больще 0,5" << endl;
+	}
+	cout << "10 максимальных значений амплитуд: ";
+	for (int i = 0; i < 10; i++) {
+		cout << v[i] << " ";
+	}
+
+
+	return 0;
+}
