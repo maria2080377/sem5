@@ -1,0 +1,23 @@
+#include <iostream>    //Задача 4
+#include <vector> 
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	int n = 1 + rand() % 100;
+	vector <int> vec(n);
+
+	for_each(vec.begin(), vec.end(), [](int& x) {x=rand()%100+(-50); });
+
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	vec.erase(remove_if(vec.begin(), vec.end(), [](int x) {return x < 0; }), vec.end());
+	for (int i : vec) {
+		cout << i<<" ";
+	}
+
+	
+
+	return 0;
+}
