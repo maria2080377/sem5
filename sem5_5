@@ -1,0 +1,44 @@
+#include <iostream>    //Хадача 5
+#include <vector> 
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	
+	vector <int> vec(20);
+
+	for_each(vec.begin(), vec.end(), [](int& x) {cin >> x; });
+
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	auto maxit = max_element(vec.begin(), vec.end());
+	auto minit = min_element(vec.begin(), vec.end());
+	int suma = accumulate(vec.begin(), vec.end(), 0);
+	cout << "Максималиный элемент: " << *maxit << ", " << "минимальный элемент: " << *minit <<", сумма: "<<suma << endl;
+	sort(vec.begin(), vec.end());
+	int len = vec.size();
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout <<endl;
+	
+	if (len % 2 != 0) {
+		for (int i = 0; i < len; i++) {
+			if (i == (len / 2)) {
+				cout<< "Медиана равна: " << vec[i];
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < len; i++) {
+			if (i == (len/2)-1) {
+				float med = (vec[i] + vec[i + 1]);
+				cout <<"Медиана равна: " << med / 2;
+			}
+		}
+	}
+	
+	
+
+
+	return 0;
+}
