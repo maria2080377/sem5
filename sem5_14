@@ -1,0 +1,38 @@
+#include <iostream>  //Задача 14
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cmath>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	int len = 0, k = 0, c = 0;
+	vector <int> v(24);
+	vector <int> res(24);
+	for_each(v.begin(), v.end(), [](int& x) {x = 100 + rand() % 401; });
+	for_each(v.begin(), v.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	
+	double suma = accumulate(v.begin(), v.end(), 0);
+	auto maxit = max_element(v.begin(), v.end());
+	
+	for (int x : v) {
+		len++;
+	}
+	int cr = suma / 24;
+	cout <<"Суммарное потребление: "<<suma<<endl << "Среднее потребление: " << cr << endl<<"Часы пикового потребления: "<< (maxit - v.begin()) <<endl;
+	transform(v.begin(), v.end(), res.begin(), [cr](int x) {return abs(cr - x); });
+	cout << "Отклонение каждого числа от среднего: ";
+	for_each(res.begin(), res.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+
+	
+	sort(v.begin(), v.end());
+	cout << "5 минимальных значений скорости: ";
+	for (int i = 0; i < 5; i++) {
+		cout << v[i] << " ";
+	}
+
+
+	return 0;
+}
