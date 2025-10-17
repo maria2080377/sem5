@@ -1,0 +1,36 @@
+#include <iostream>    //Задача 13
+#include <vector> 
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+
+	vector <int> vec(50);
+	int k = 0, len = 0;
+
+	for_each(vec.begin(), vec.end(), [](int& x) {x = -30 + rand() % 100; ; });
+	for_each(vec.begin(), vec.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	vec.erase(remove_if(vec.begin(), vec.end(), [](int x) {return x < 0 || x>12; }), vec.end());
+
+	auto maxit = max_element(vec.begin(), vec.end());
+	auto minit = min_element(vec.begin(), vec.end());
+	double suma = accumulate(vec.begin(), vec.end(), 0);
+	
+	for (int x : vec) {
+		len++;
+	}
+	double cr = suma / len;
+	cout << "Среднее давление: " << cr << endl;
+	cout << "Максимальное давление: " << *maxit << ", минимальное давление: " << *minit << endl;
+
+	for_each(vec.begin(), vec.end(), [](int x) {if (x > 8) { cout << x << " "; }});
+
+	cout << endl;
+
+	
+
+
+	return 0;
+}
