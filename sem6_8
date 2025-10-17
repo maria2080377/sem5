@@ -1,0 +1,36 @@
+#include <iostream>  //Задача 8
+#include <vector>
+#include <algorithm>
+#include <numeric>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "RU");
+	int len = 0, k = 0, c = 0;
+	vector <int> v(50);
+	for_each(v.begin(), v.end(), [](int& x) {x =0+ rand()%181 ; });
+	for_each(v.begin(), v.end(), [](int x) {cout << x << " "; });
+	cout << endl;
+	v.erase(remove_if(v.begin(), v.end(), [](int x) {return x > 120; }), v.end());
+	double suma = accumulate(v.begin(), v.end(), 0);
+	for (int x : v) {
+		len++;
+		if (x > 0) {
+			k++;
+		}
+	}
+	sort(v.begin(), v.end(), greater<int>());
+	cout << "Средняя скорчть: " << suma / 180<<endl;
+	if (len == k) {
+		cout << "Все значения больще 0" << endl;
+	}
+	else {
+		cout << "Не все значения больще 0" << endl;
+	}
+	cout << "10 максимальных значений скорости: ";
+	for (int i = 0; i < 10; i++) {
+		cout << v[i] << " ";
+	}
+
+
+	return 0;
+}
